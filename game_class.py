@@ -1,5 +1,4 @@
 import player
-import board
 
 class Game:
     def __init__(self) -> None:
@@ -36,8 +35,15 @@ class Game:
         player_1_pass, player_2_pass = False, False
         
         while player_1_pass == False and player_2_pass == False:
-            self.player_1.take_action()
-            self.player_2.take_action()
+            if self.player_1.take_action() == False:
+                player_1_pass = True
+            if self.player_2.take_action() == False:
+                player_2_pass = True
+                
+        if self.player_1.hand_count == 0:
+            player_1_pass = True
+        if self.player_2.hand_count == 0:
+            player_2_pass = True
         
         
         

@@ -1,7 +1,7 @@
-
+import test
 
 def main():
-    print("test")
+    test.runTests()
 
 if __name__ == "__main__":
     main()

@@ -1,49 +1,37 @@
 import player
+import csv
 
 class Game:
     def __init__(self) -> None:
         self.current_round = 0
-        self.board = board.Board()
-        self.player_1, self.player_2 = player.Player(), player.Player()
+        self.player_1, self.player_2 = player.Player(True), player.Player(False)
         
-    def start_of_round_draw(self):
-        assert(0 < self.current_round < 4 and type(self.current_round) == int, 
-               f"did not pass assert and current round is {self.current_round}")
-        
-        if self.current_round == 1:
-            self.player_1.draw_cards(10)
-            self.player_2.draw_cards(10)
-            
-        elif self.current_round == 2:
-            self.player_1.draw_cards(2)
-            self.player_2.draw_cards(2)
-            
-        elif self.current_round == 3:
-            self.player_1.draw_cards(1)
-            self.player_2.draw_cards(1)
-        
-        else:
-            raise SyntaxError(f"next_round function could not detect a round and passed assertion check. current round is {self.current_round}")
-        
-        
-    def next_round(self):
+    #counts athe rounds and does an assertion check
+    def nextRound(self):
         assert(0 < self.current_round < 4 and type(self.current_round) == int, 
                f"did not pass assert and current round is {self.current_round}")
         self.current_round += 1
         
-    def round_loop(self):
+    # game engine loop, stops when both players pass
+    def roundLoop(self):
         player_1_pass, player_2_pass = False, False
         
         while player_1_pass == False and player_2_pass == False:
-            if self.player_1.take_action() == False:
+            if self.player_1.takeAction() == False:
                 player_1_pass = True
-            if self.player_2.take_action() == False:
+            if self.player_2.takeAction() == False:
                 player_2_pass = True
+            
+    #loads csv for the rest of the program to work
+    def loadCsv(self):
+        final_array = []
+        with open("cards.csv", "r") as file:
+            reader = csv.reader(file)
+            for item in reader:
+                final_array.append(tuple(item))
                 
-        if self.player_1.hand_count == 0:
-            player_1_pass = True
-        if self.player_2.hand_count == 0:
-            player_2_pass = True
+        return tuple(final_array)
+                
         
         
         

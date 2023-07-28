@@ -10,32 +10,40 @@ class Card:
         self.current_power = self.__original_power
         
     def placed(self):
-        effects_dict = {"Agile": self.agile, "Medic": self.medic, "Moral Boost": self.moralBoost, 
-                        "Muster": self.muster, "Spy": self.spy, "Tight Bond": self.tightBond}
+        effects_dict = {"Agile": self.placedAgile, "Medic": self.placedMedic, "Moral Boost": self.placedMoralBoost, 
+                        "Muster": self.placedMuster, "Spy": self.placedSpy, "Tight Bond": self.placedTightBond}
         for item in self.attributes:
             if item in effects_dict:
-                effects_dict.get(item, lambda: "invalid")()
-            else:
-                print(f"{item} not found")
+                effects_dict.get(item)()
+                
+    def placedAgile(self):
+        pass
         
-    def not_found(self):
-        print("not found")
+    def placedMedic(self):
+        print("healing!")
     
-    def agile(self):
+    def placedMoralBoost(self):
         pass
     
-    def medic(self):
-        print("healing!")
+    def placedMuster(self):
+        pass
+    
+    def placedSpy(self):
+        pass
+    
+    def placedTightBond(self):
+        pass
+                
+    def setOriginalPower(self):
+        self.current_power = self.__original_power
+    
+    def setWeatherActive(self):
+        self.current_power = 1
     
     def moralBoost(self):
         pass
     
-    def muster(self):
-        pass
-    
-    def spy(self):
-        pass
-    
-    def tightBond(self):
-        pass
+    def tighBond(self, card_name):
+        if self.name == card_name:
+            self.current_power *= 2
     

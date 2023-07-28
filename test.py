@@ -2,6 +2,7 @@
 #This is a test file and everything in here does not effect how the rest of the engine functions.
 import board
 import card_classes
+import csv
 
 def test1():
     test_dict = {"one": 1, "two": 2, "three": 3}
@@ -20,3 +21,10 @@ def test3(card_stats):
     card = card_classes.Card(card_stats, None)
     print(card.name, card.type, card.current_power, card.attributes, card.is_gold)
     card.placed()
+    
+def test4():
+    with open("cards.csv", "r", newline='') as file:
+        reader = csv.reader(file)
+        card_list = tuple(reader)
+        print(len(reader))
+    

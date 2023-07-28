@@ -1,5 +1,6 @@
 import card_classes
 import row_classes
+import csv
 
 
 class Board:
@@ -16,7 +17,10 @@ class Board:
         player_2_siege = row_classes.Row()
         return (player_1_melee, player_1_ranged, player_1_siege), (player_2_melee, player_2_ranged, player_2_siege)
     
-    def searchCsv(self, given_card):
+    def searchCsv(self, target_card_id):
+        pass
+            
+    def binarySearch(self, given_list, target_card_id):
         pass
     
     #This function will be changed once arduino code is set up.

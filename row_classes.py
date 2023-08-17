@@ -3,9 +3,7 @@
 class Row:
     def __init__(self) -> None:
         self.__cards = []
-        self.active_affects = []
         self.priority_queue = PriorityQueue(self)
-        self.weather = False
         
     def addCard(self, card):
         self.__cards.append(card)
@@ -34,41 +32,36 @@ class Row:
                 highest.append(item)
                 highest_number = item.power
         return (tuple(highest), highest_number)
-    # Change Weather to a normal card effect --TODO
+
     def activeWeather(self, *args):
-        """if self.weather == True:
-            return
-        for item in self._cards:
-            item.setWeatherActive()"""
-        print("weather")
-    
-    def clearWeather(self, *args):
-        if self.weather == False:
-            return
-        for item in self._cards:
-            item.current_power = item.setOriginalPower()
-            self.applyBuffs()
+        for item in self.__cards:
+            item.setWeatherActive()
             
     def resetCardBuffs(self):
-        pass
+        for item in self.__cards:
+            item.setOriginalPower()
             
     def addBuff(self, buff):
         self.priority_queue.addEffect(buff)
             
-    def updateBuffs(self): # Finish --TODO
+    def updateBuffs(self):
+        self.resetCardBuffs()
         self.priority_queue.applyEffects()
     
     def removeBuff(self, buff):
         self.priority_queue.deleteEffect(buff)
     
-    def moralBoost(self, *args):
-        print("moral boost")
+    def moralBoost(self, given_card): 
+        for item in self.__cards:
+            item.moralBoost(given_card)
     
-    def tightBond(self, *args):
-        print("tight bond")
+    def tightBond(self, given_card): 
+        for item in self.__cards:
+            item.tightBond(given_card)
             
-    def horn(self, *args):
-        print("horn")
+    def horn(self, given_card): 
+        for item in self.__cards:
+            item.horn(given_card)
             
             
 class PriorityQueue:
@@ -78,6 +71,9 @@ class PriorityQueue:
         self.effect_dict = {"Weather": 1, "Tight Bond": 2, "Horn": 3, "Moral Boost": 4}
         
     def addEffect(self, given_effect):
+        if given_effect == "Horn":
+            if "Horn" in self.__effects_heap:
+                return
         self.__effects_heap.append(given_effect)
         if len(self.__effects_heap) == 1:
             return

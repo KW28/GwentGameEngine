@@ -9,29 +9,29 @@ class Card:
         self.is_gold = bool(int(card_statistics[4]))
         self.current_power = self.__original_power
         
-    def placed(self):
+    def placed(self, current_player_turn):
         effects_dict = {"Agile": self.placedAgile, "Medic": self.placedMedic, "Moral Boost": self.placedMoralBoost, 
                         "Muster": self.placedMuster, "Spy": self.placedSpy, "Tight Bond": self.placedTightBond}
         for item in self.attributes:
             if item in effects_dict:
-                effects_dict.get(item)()
+                effects_dict.get(item)(current_player_turn)
                 
-    def placedAgile(self):
+    def placedAgile(self, *args):
         pass
         
-    def placedMedic(self):
+    def placedMedic(self, current_player_turn):
         print("healing!")
     
-    def placedMoralBoost(self):
+    def placedMoralBoost(self, *args):
         pass
     
-    def placedMuster(self):
+    def placedMuster(self, *args):
         pass
     
-    def placedSpy(self):
+    def placedSpy(self, current_player_turn):
         pass
     
-    def placedTightBond(self):
+    def placedTightBond(self, *args):
         pass
                 
     def setOriginalPower(self):
@@ -40,10 +40,16 @@ class Card:
     def setWeatherActive(self):
         self.current_power = 1
     
-    def moralBoost(self):
-        pass
+    def moralBoost(self, given_card):
+        if self != given_card:
+            self.current_power += 1
     
-    def tighBond(self, card_name):
-        if self.name == card_name:
+    def tighBond(self, given_card):
+        if self.name == given_card.name:
             self.current_power *= 2
     
+    def horn(self, given_card):
+        if self.is_gold is True:
+            return
+        if self != given_card:
+            self.current_power *= 2

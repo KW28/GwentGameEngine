@@ -46,8 +46,8 @@ class Board:
     
     def requestCard(self, current_player_turn): # seperate into smaller functions. TODO
         played_card = self.readCard(current_player_turn)
-        played_card(played_card, current_player_turn)
-        played_card.placed(current_player_turn)
+        self.placeCard(played_card, current_player_turn)
+        played_card.placed()
         
     def placeCard(self, card, current_player_turn):
         position_dict = {"Melee": 0, "Ranged": 1, "Siege": 2}
@@ -61,3 +61,9 @@ class Board:
         if input_id == "pass": #condition may change in the future
             return "pass"
         return card_classes.Card(self.searchCsv(input_id))
+    
+    def findCardRow(self, given_card):
+        row_positions = {"Melee": 0, "Range": 1, "Siege": 2}
+        
+        if given_card.player == 1:
+            return self.player_1_boards[row_positions.get(given_card.type)]

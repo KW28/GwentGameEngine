@@ -1,7 +1,8 @@
 
 class Card:
-    def __init__(self, card_statistics, board_class) -> None:
+    def __init__(self, card_statistics, player_belonging, board_class) -> None:
         self.__parent_board = board_class
+        self.player = player_belonging
         self.name = card_statistics[0]
         self.type = card_statistics[1]
         self.__original_power = card_statistics[2]
@@ -9,17 +10,17 @@ class Card:
         self.is_gold = bool(int(card_statistics[4]))
         self.current_power = self.__original_power
         
-    def placed(self, current_player_turn):
+    def placed(self):
         effects_dict = {"Agile": self.placedAgile, "Medic": self.placedMedic, "Moral Boost": self.placedMoralBoost, 
                         "Muster": self.placedMuster, "Spy": self.placedSpy, "Tight Bond": self.placedTightBond}
         for item in self.attributes:
             if item in effects_dict:
-                effects_dict.get(item)(current_player_turn)
+                effects_dict.get(item)()
                 
     def placedAgile(self, *args):
         pass
         
-    def placedMedic(self, current_player_turn):
+    def placedMedic(self, *args):
         print("healing!")
     
     def placedMoralBoost(self, *args):
